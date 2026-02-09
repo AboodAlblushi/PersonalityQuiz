@@ -26,10 +26,19 @@ class QuestionViewController: UIViewController {
     @IBOutlet weak var multipleLabel3: UILabel!
     
     
+    
+    @IBOutlet weak var multiSwitch1: UISwitch!
+    @IBOutlet weak var multiSwitch2: UISwitch!
+    @IBOutlet weak var multiSwitch3: UISwitch!
+    @IBOutlet weak var multiSwitch4: UISwitch!
+    
     @IBOutlet weak var rangedStackView: UIStackView!
     @IBOutlet weak var rangedLabel1: UILabel!
     @IBOutlet weak var rangedLabel2: UILabel!
+    @IBOutlet weak var rangedSlider: UISlider!
     
+ 
+    @IBOutlet weak var timerLabel: UILabel!
     
     
     @IBOutlet weak var questionProgressView: UIProgressView!
@@ -65,14 +74,68 @@ class QuestionViewController: UIViewController {
                  ]),
     ]
     
-    var questionIndex: Int = 0
+    var questionIndex = 0
+    
+    var answersChosen: [Answer] = []
+    
+    var questionTimer: Timer?
+    var timeRemaining: Int = 300
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        // 🔀 RANDOMIZE QUESTIONS (SAFE)
+         questions.shuffle()
+         
+         // 🔀 RANDOMIZE ANSWERS INSIDE EACH QUESTION (SAFE)
+         for i in 0..<questions.count {
+             questions[i].answers.shuffle()
+         }
+         
         // Do any additional setup after loading the view.
         updateUI()
     }
+    
+    @objc func updateTimer() {
+        timeRemaining -= 1
+
+        let minutes = timeRemaining / 60
+        let seconds = timeRemaining % 60
+
+        timerLabel.text = String(format: "%02d:%02d", minutes, seconds)
+
+        if timeRemaining <= 0 {
+            stopTimer()
+            skipQuestionDueToTimeout()
+        }
+    }
+
+    func startTimer() {
+        questionTimer?.invalidate()
+        timeRemaining = 300
+
+        timerLabel.text = "05:00"
+
+        questionTimer = Timer.scheduledTimer(
+            timeInterval: 1,
+            target: self,
+            selector: #selector(updateTimer),
+            userInfo: nil,
+            repeats: true
+        )
+    }
+
+    func stopTimer() {
+        questionTimer?.invalidate()
+        questionTimer = nil
+    }
+
+    func skipQuestionDueToTimeout() {
+        nextQuestion()
+    }
+
+    
     
     func updateUI(){
         
@@ -101,6 +164,7 @@ class QuestionViewController: UIViewController {
             updateRangedStack(using: currentAnswers)
         }
         
+        startTimer()
         
     }
     
@@ -114,6 +178,11 @@ class QuestionViewController: UIViewController {
     
     func updateMultipleStack(using answers: [Answer]){
         multipleStackView.isHidden = false
+        multiSwitch1.isOn = false
+        multiSwitch2.isOn = false
+        multiSwitch3.isOn = false
+        multiSwitch4.isOn = false
+        
         multipleLabel1.text = answers[0].text
         multipleLabel2.text = answers[1].text
         multipleLabel3.text = answers[2].text
@@ -124,10 +193,78 @@ class QuestionViewController: UIViewController {
     
     func updateRangedStack(using answers: [Answer]){
         rangedStackView.isHidden = false
+        rangedSlider.setValue(0.4, animated: false)
         rangedLabel1.text = answers.first?.text
         rangedLabel2.text = answers.last?.text
     }
     
+    
+    @IBAction func singleAnswerButtonPressed(_ sender: UIButton) {
+        stopTimer()
+        let currentAnswers = questions[questionIndex].answers
+        switch sender{
+        case singleButton1:
+            answersChosen.append(currentAnswers[0])
+        case singleButton2:
+            answersChosen.append(currentAnswers[1])
+        case singleButton3:
+            answersChosen.append(currentAnswers[2])
+        case singleButton4:
+            answersChosen.append(currentAnswers[3])
+        
+        default :
+            break
+        }
+        nextQuestion()
+        
+    }
+    
+    @IBAction func multipleAnswerButtonPressed() {
+        let currentAnswers = questions[questionIndex].answers
+        
+        if multiSwitch1.isOn{
+            answersChosen.append(currentAnswers[0])
+        }
+        if multiSwitch2.isOn{
+            answersChosen.append(currentAnswers[1])
+        }
+        if multiSwitch3.isOn{
+            answersChosen.append(currentAnswers[2])
+        }
+        if multiSwitch4.isOn{
+            answersChosen.append(currentAnswers[3])
+
+        }
+        nextQuestion()
+    }
+    
+    @IBAction func rangedAnswerButtonPressed() {
+        
+        let currentAnswers = questions[questionIndex].answers
+        let index = Int(round(rangedSlider.value * Float(currentAnswers.count - 1)))
+        
+        answersChosen.append(currentAnswers[index])
+        nextQuestion()
+        
+    }
+    func nextQuestion(){
+        
+        questionIndex += 1
+        
+        if questionIndex < questions.count{
+            updateUI()
+        } else {
+            performSegue(withIdentifier: "Results", sender: nil)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "Results"{
+            let resultsViewController = segue.destination as! ResultViewController
+            resultsViewController.responses = answersChosen // Use the lowercase variable!
+        }
+        
+    }
     /*
     // MARK: - Navigation
 
