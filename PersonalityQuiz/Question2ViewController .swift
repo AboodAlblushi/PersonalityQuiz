@@ -1,49 +1,17 @@
-//
-//  QuestionViewController.swift
-//  PersonalityQuiz
-//
-//  Created by Abdullah on 05/02/2026.
-//
-
 import UIKit
 
 class Question2ViewController: UIViewController {
 
     @IBOutlet weak var questionLabel: UILabel!
-    
     @IBOutlet weak var singleStackView: UIStackView!
-    @IBOutlet weak var singleButton1: UIButton!
-    @IBOutlet weak var singleButton2: UIButton!
-    @IBOutlet weak var singleButton3: UIButton!
-    @IBOutlet weak var singleButton4: UIButton!
-    
-    
-    
     @IBOutlet weak var multipleStackView: UIStackView!
-    @IBOutlet weak var multipleLabel1: UILabel!
-    @IBOutlet weak var multipleLabel2: UILabel!
-    @IBOutlet weak var multipleLabel4: UILabel!
-    @IBOutlet weak var multipleLabel3: UILabel!
-    
-    
-    
-    @IBOutlet weak var multiSwitch1: UISwitch!
-    @IBOutlet weak var multiSwitch2: UISwitch!
-    @IBOutlet weak var multiSwitch3: UISwitch!
-    @IBOutlet weak var multiSwitch4: UISwitch!
-    
     @IBOutlet weak var rangedStackView: UIStackView!
     @IBOutlet weak var rangedLabel1: UILabel!
     @IBOutlet weak var rangedLabel2: UILabel!
     @IBOutlet weak var rangedSlider: UISlider!
-    
- 
     @IBOutlet weak var timerLabel: UILabel!
-    
-    
     @IBOutlet weak var questionProgressView: UIProgressView!
-    
-    
+
     var questions: [Question] = [
 
         Question(
@@ -79,57 +47,47 @@ class Question2ViewController: UIViewController {
             ]
         )
     ]
-    
+
     var questionIndex = 0
-    
     var answersChosen: [Answer] = []
-    
+
     var questionTimer: Timer?
     var timeRemaining: Int = 300
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // 🔀 RANDOMIZE QUESTIONS (SAFE)
-         questions.shuffle()
-         
-         // 🔀 RANDOMIZE ANSWERS INSIDE EACH QUESTION (SAFE)
-         for i in 0..<questions.count {
-             questions[i].answers.shuffle()
-         }
-         
-        // Do any additional setup after loading the view.
+
+        questions.shuffle()
+        for i in 0..<questions.count {
+            questions[i].answers.shuffle()
+        }
+
         updateUI()
     }
-    
+
+    // MARK: - Timer
+
     @objc func updateTimer() {
         timeRemaining -= 1
-
         let minutes = timeRemaining / 60
         let seconds = timeRemaining % 60
-
         timerLabel.text = String(format: "%02d:%02d", minutes, seconds)
 
         if timeRemaining <= 0 {
             stopTimer()
-            skipQuestionDueToTimeout()
+            nextQuestion()
         }
     }
 
     func startTimer() {
         questionTimer?.invalidate()
         timeRemaining = 300
-
         timerLabel.text = "05:00"
-
-        questionTimer = Timer.scheduledTimer(
-            timeInterval: 1,
-            target: self,
-            selector: #selector(updateTimer),
-            userInfo: nil,
-            repeats: true
-        )
+        questionTimer = Timer.scheduledTimer(timeInterval: 1,
+                                             target: self,
+                                             selector: #selector(updateTimer),
+                                             userInfo: nil,
+                                             repeats: true)
     }
 
     func stopTimer() {
@@ -137,148 +95,125 @@ class Question2ViewController: UIViewController {
         questionTimer = nil
     }
 
-    func skipQuestionDueToTimeout() {
-        nextQuestion()
-    }
+    // MARK: - UI
 
-    
-    
-    func updateUI(){
-        
+    func updateUI() {
         singleStackView.isHidden = true
         multipleStackView.isHidden = true
         rangedStackView.isHidden = true
-        
-        navigationItem.title = "Question #\(questionIndex + 1)"
-        
+
         let currentQuestion = questions[questionIndex]
-        let currentAnswers = currentQuestion.answers
-        let totalProgress = Float(questionIndex) / Float(questions.count)
-        
         questionLabel.text = currentQuestion.text
-        questionProgressView.setProgress(totalProgress, animated: true)
-        
+
+        let progress = Float(questionIndex) / Float(questions.count)
+        questionProgressView.setProgress(progress, animated: true)
+
         switch currentQuestion.type {
         case .single:
-            
-            updateSingleStack(using: currentAnswers)
+            configureSingleStack(answers: currentQuestion.answers)
         case .multiple:
-           
-            updateMultipleStack(using: currentAnswers)
+            configureMultipleStack(answers: currentQuestion.answers)
         case .ranged:
-            
-            updateRangedStack(using: currentAnswers)
+            configureRangedStack(answers: currentQuestion.answers)
         }
-        
-        startTimer()
-        
-    }
-    
-    func updateSingleStack(using answers: [Answer]){
-        singleStackView.isHidden = false
-        singleButton1.setTitle(answers[0].text, for: .normal)
-        singleButton2.setTitle(answers[1].text, for: .normal)
-        singleButton3.setTitle(answers[2].text, for: .normal)
-        singleButton4.setTitle(answers[3].text, for: .normal)
-    }
-    
-    func updateMultipleStack(using answers: [Answer]){
-        multipleStackView.isHidden = false
-        multiSwitch1.isOn = false
-        multiSwitch2.isOn = false
-        multiSwitch3.isOn = false
-        multiSwitch4.isOn = false
-        
-        multipleLabel1.text = answers[0].text
-        multipleLabel2.text = answers[1].text
-        multipleLabel3.text = answers[2].text
-        multipleLabel4.text = answers[3].text
 
-        
+        startTimer()
     }
-    
-    func updateRangedStack(using answers: [Answer]){
+
+    // MARK: - Dynamic Single
+
+    func configureSingleStack(answers: [Answer]) {
+        singleStackView.isHidden = false
+        singleStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+
+        for (index, answer) in answers.enumerated() {
+            let button = UIButton(type: .system)
+            button.setTitle(answer.text, for: .normal)
+            button.tag = index
+            button.addTarget(self, action: #selector(singleButtonTapped(_:)), for: .touchUpInside)
+            singleStackView.addArrangedSubview(button)
+        }
+    }
+
+    @objc func singleButtonTapped(_ sender: UIButton) {
+        stopTimer()
+        let answer = questions[questionIndex].answers[sender.tag]
+        answersChosen.append(answer)
+        nextQuestion()
+    }
+
+    // MARK: - Dynamic Multiple
+
+    func configureMultipleStack(answers: [Answer]) {
+        multipleStackView.isHidden = false
+        multipleStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+
+        for (index, answer) in answers.enumerated() {
+            let row = UIStackView()
+            row.axis = .horizontal
+            row.distribution = .fillEqually
+
+            let label = UILabel()
+            label.text = answer.text
+
+            let toggle = UISwitch()
+            toggle.tag = index
+
+            row.addArrangedSubview(label)
+            row.addArrangedSubview(toggle)
+
+            multipleStackView.addArrangedSubview(row)
+        }
+
+        let submit = UIButton(type: .system)
+        submit.setTitle("Submit Answer", for: .normal)
+        submit.addTarget(self, action: #selector(multipleSubmitTapped), for: .touchUpInside)
+        multipleStackView.addArrangedSubview(submit)
+    }
+
+    @objc func multipleSubmitTapped() {
+        let currentAnswers = questions[questionIndex].answers
+
+        for case let row as UIStackView in multipleStackView.arrangedSubviews {
+            if let toggle = row.arrangedSubviews.last as? UISwitch, toggle.isOn {
+                answersChosen.append(currentAnswers[toggle.tag])
+            }
+        }
+
+        nextQuestion()
+    }
+
+    // MARK: - Ranged
+
+    func configureRangedStack(answers: [Answer]) {
         rangedStackView.isHidden = false
-        rangedSlider.setValue(0.4, animated: false)
+        rangedSlider.setValue(0.5, animated: false)
         rangedLabel1.text = answers.first?.text
         rangedLabel2.text = answers.last?.text
     }
-    
-    
-    @IBAction func singleAnswerButtonPressed(_ sender: UIButton) {
-        stopTimer()
-        let currentAnswers = questions[questionIndex].answers
-        switch sender{
-        case singleButton1:
-            answersChosen.append(currentAnswers[0])
-        case singleButton2:
-            answersChosen.append(currentAnswers[1])
-        case singleButton3:
-            answersChosen.append(currentAnswers[2])
-        case singleButton4:
-            answersChosen.append(currentAnswers[3])
-        
-        default :
-            break
-        }
-        nextQuestion()
-        
-    }
-    
-    @IBAction func multipleAnswerButtonPressed() {
-        let currentAnswers = questions[questionIndex].answers
-        
-        if multiSwitch1.isOn{
-            answersChosen.append(currentAnswers[0])
-        }
-        if multiSwitch2.isOn{
-            answersChosen.append(currentAnswers[1])
-        }
-        if multiSwitch3.isOn{
-            answersChosen.append(currentAnswers[2])
-        }
-        if multiSwitch4.isOn{
-            answersChosen.append(currentAnswers[3])
 
-        }
-        nextQuestion()
-    }
-    
     @IBAction func rangedAnswerButtonPressed() {
-        
-        let currentAnswers = questions[questionIndex].answers
-        let index = Int(round(rangedSlider.value * Float(currentAnswers.count - 1)))
-        
-        answersChosen.append(currentAnswers[index])
+        let answers = questions[questionIndex].answers
+        let index = Int(round(rangedSlider.value * Float(answers.count - 1)))
+        answersChosen.append(answers[index])
         nextQuestion()
-        
     }
-    func nextQuestion(){
-        
+
+    // MARK: - Navigation
+
+    func nextQuestion() {
         questionIndex += 1
-        
-        if questionIndex < questions.count{
+        if questionIndex < questions.count {
             updateUI()
         } else {
             performSegue(withIdentifier: "Results2", sender: nil)
         }
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "Results2"{
-            let results2ViewController = segue.destination as! Result2ViewController
-            results2ViewController.responses = answersChosen // Use the lowercase variable!
+        if segue.identifier == "Results2" {
+            let vc = segue.destination as! Result2ViewController
+            vc.responses = answersChosen
         }
-        
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

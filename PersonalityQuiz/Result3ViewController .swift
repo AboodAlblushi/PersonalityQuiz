@@ -1,26 +1,15 @@
-//
-//  ResultViewController.swift
-//  PersonalityQuiz
-//
-//  Created by Abdullah on 05/02/2026.
-//
-
 import UIKit
 
 class Result3ViewController: UIViewController {
     
     @IBOutlet weak var resultAnswerLabel: UILabel!
     @IBOutlet weak var resultDefinitionLabel: UILabel!
-    var responses : [Answer]!
+    var responses: [Answer]!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
         calculatePersonalityResult()
         navigationItem.hidesBackButton = true
-        
-        
     }
     
     func calculatePersonalityResult() {
@@ -48,20 +37,19 @@ class Result3ViewController: UIViewController {
             resultAnswerLabel.text = "⚖️ Ambivert"
             resultDefinitionLabel.text = "You balance social time and alone time well."
         }
-
         
+        let quizResult = QuizResult(
+            title: "Which Friend Are You Quiz",
+            result: resultAnswerLabel.text ?? "",
+            date: Date()
+        )
+
+        QuizHistoryManager.shared.saveResult(quizResult)
+
     }
 
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    // ✅ DONE BUTTON ACTION (connect this to Done bar button)
+    @IBAction func doneButtonTapped(_ sender: UIBarButtonItem) {
+        navigationController?.popToRootViewController(animated: true)
     }
-    */
-
 }

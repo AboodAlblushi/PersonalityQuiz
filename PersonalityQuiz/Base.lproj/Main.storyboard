@@ -79,6 +79,9 @@
                                         <rect key="frame" x="0.0" y="0.0" width="390" height="38.333333333333336"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="View Quiz History"/>
+                                        <connections>
+                                            <segue destination="A6N-aT-8de" kind="show" id="4rO-Z1-dXs"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -443,12 +446,12 @@
                                             </label>
                                         </subviews>
                                     </stackView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e80-0t-M5y" customClass="Results">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e80-0t-M5y">
                                         <rect key="frame" x="0.0" y="90.333333333333314" width="390" height="38.333333333333343"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Submit Answer"/>
                                         <connections>
-                                            <action selector="rangedAnswerButtonPressed" destination="BYZ-38-t0r" eventType="touchUpInside" id="iX4-3n-mQw"/>
+                                            <action selector="rangedSubmitTapped" destination="BYZ-38-t0r" eventType="touchUpInside" id="7Ai-50-Ogq"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -481,6 +484,7 @@
                             <constraint firstItem="ffs-bi-d4V" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="HLE-Ee-gQC"/>
                             <constraint firstItem="Yqh-Nw-ZpC" firstAttribute="leading" secondItem="8IE-sn-0n9" secondAttribute="leading" id="JcN-H9-Q6X"/>
                             <constraint firstItem="m9j-GN-WqP" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="Oq8-rL-gIe"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="s8d-LX-uNg" secondAttribute="trailing" constant="20" id="PTL-t3-wrj"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ffs-bi-d4V" secondAttribute="trailing" constant="20" id="Q1p-pc-qcD"/>
                             <constraint firstItem="Yqh-Nw-ZpC" firstAttribute="centerX" secondItem="jV7-RN-lQe" secondAttribute="centerX" id="QSi-O9-D8J"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="8IE-sn-0n9" secondAttribute="trailing" constant="20" id="Rj8-mL-IG1"/>
@@ -489,19 +493,12 @@
                             <constraint firstItem="m9j-GN-WqP" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="cNU-Rw-3A3"/>
                             <constraint firstItem="ffs-bi-d4V" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="hgb-cp-Sjw"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ffs-bi-d4V" secondAttribute="trailing" constant="20" id="oH5-yn-CPH"/>
+                            <constraint firstItem="s8d-LX-uNg" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="pmh-vh-2wk"/>
                             <constraint firstItem="Yqh-Nw-ZpC" firstAttribute="trailing" secondItem="8IE-sn-0n9" secondAttribute="trailing" id="zQ1-m1-dMg"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Oe7-sn-g9R"/>
                     <connections>
-                        <outlet property="multiSwitch1" destination="w5C-OG-A0D" id="JUI-pu-MGl"/>
-                        <outlet property="multiSwitch2" destination="tOf-0S-Bha" id="u5h-Uo-Yzm"/>
-                        <outlet property="multiSwitch3" destination="ywN-sc-ZTx" id="OVj-wC-JAr"/>
-                        <outlet property="multiSwitch4" destination="pxf-Hc-5Xv" id="eBh-gs-ueC"/>
-                        <outlet property="multipleLabel1" destination="gUG-0Z-1pr" id="qP5-7g-G57"/>
-                        <outlet property="multipleLabel2" destination="HWE-ts-jkr" id="Tb3-oP-lcY"/>
-                        <outlet property="multipleLabel3" destination="D8C-0F-qAd" id="aYr-NR-3Zq"/>
-                        <outlet property="multipleLabel4" destination="hKj-Uu-qur" id="X3X-VG-cXE"/>
                         <outlet property="multipleStackView" destination="s8d-LX-uNg" id="rZm-h5-vt3"/>
                         <outlet property="questionLabel" destination="m9j-GN-WqP" id="7dt-i7-vO1"/>
                         <outlet property="questionProgressView" destination="Yqh-Nw-ZpC" id="WRY-fE-sGm"/>
@@ -509,12 +506,8 @@
                         <outlet property="rangedLabel2" destination="lI6-Zq-I9a" id="lrL-iY-x1D"/>
                         <outlet property="rangedSlider" destination="ZSk-mE-RdV" id="xLt-QC-SUS"/>
                         <outlet property="rangedStackView" destination="8IE-sn-0n9" id="WHk-vC-6rG"/>
-                        <outlet property="singleButton1" destination="W1N-WJ-Frn" id="F9p-YR-mBQ"/>
-                        <outlet property="singleButton2" destination="owG-NU-ga0" id="wgo-ZK-crf"/>
-                        <outlet property="singleButton3" destination="ZCc-NB-uKK" id="4B8-hN-0FC"/>
-                        <outlet property="singleButton4" destination="f4b-6k-5Tu" id="mOT-v0-1kH"/>
                         <outlet property="singleStackView" destination="ffs-bi-d4V" id="aJR-as-6dm"/>
-                        <outlet property="timerLabel" destination="jV7-RN-lQe" id="bmE-dJ-4cy"/>
+                        <outlet property="timerLabel" destination="jV7-RN-lQe" id="Sjl-P1-mY5"/>
                         <segue destination="DfP-3J-xik" kind="show" identifier="Results" id="7eG-6G-FZz"/>
                     </connections>
                 </viewController>
@@ -559,7 +552,7 @@
                     <navigationItem key="navigationItem" id="NHQ-WR-ofh">
                         <barButtonItem key="rightBarButtonItem" title="Done" id="tFV-mU-RZI">
                             <connections>
-                                <segue destination="AAh-dd-dsU" kind="unwind" unwindAction="unwindToIntroduction:" id="fr7-L8-H7V"/>
+                                <action selector="doneButtonTapped:" destination="DfP-3J-xik" id="IYO-UZ-3Hz"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -569,7 +562,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7xM-i5-6TO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="AAh-dd-dsU" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="4520.9302325581393" y="119.74248927038627"/>
         </scene>
@@ -742,33 +734,27 @@
                             <constraint firstItem="Z4c-RE-fT8" firstAttribute="bottom" secondItem="DPD-jK-5ZW" secondAttribute="bottom" constant="44" id="1Gy-pu-Rw3"/>
                             <constraint firstItem="Z4c-RE-fT8" firstAttribute="trailing" secondItem="1Kp-eN-zYh" secondAttribute="trailing" constant="20" id="5hh-Ri-wSO"/>
                             <constraint firstItem="Z4c-RE-fT8" firstAttribute="trailing" secondItem="Xk0-iq-8Z5" secondAttribute="trailing" constant="20" id="69N-IL-wVG"/>
+                            <constraint firstItem="Z4c-RE-fT8" firstAttribute="trailing" secondItem="wvf-7D-21C" secondAttribute="trailing" constant="20" id="D4o-A4-X9z"/>
+                            <constraint firstItem="Z4c-RE-fT8" firstAttribute="trailing" secondItem="wvf-7D-21C" secondAttribute="trailing" constant="20" id="DLt-UT-OQF"/>
                             <constraint firstItem="c6f-Da-Rwc" firstAttribute="leading" secondItem="Z4c-RE-fT8" secondAttribute="leading" constant="20" id="F77-NJ-Svn"/>
-                            <constraint firstItem="wvf-7D-21C" firstAttribute="leading" secondItem="Z4c-RE-fT8" secondAttribute="leading" constant="20" id="GLo-Ox-SXM"/>
                             <constraint firstItem="1Kp-eN-zYh" firstAttribute="centerY" secondItem="qd4-uD-NyU" secondAttribute="centerY" id="Nca-CX-0zB"/>
                             <constraint firstItem="Xk0-iq-8Z5" firstAttribute="leading" secondItem="Z4c-RE-fT8" secondAttribute="leading" constant="20" id="PCe-2j-WOd"/>
                             <constraint firstItem="1Kp-eN-zYh" firstAttribute="leading" secondItem="Z4c-RE-fT8" secondAttribute="leading" constant="20" id="POv-22-hoN"/>
                             <constraint firstItem="Z4c-RE-fT8" firstAttribute="trailing" secondItem="c6f-Da-Rwc" secondAttribute="trailing" constant="20" id="QFc-wz-FJD"/>
+                            <constraint firstItem="wvf-7D-21C" firstAttribute="centerY" secondItem="qd4-uD-NyU" secondAttribute="centerY" id="YhC-9f-QqF"/>
                             <constraint firstAttribute="bottom" secondItem="AmD-Qm-WP3" secondAttribute="bottom" constant="156" id="a8M-hW-PT8"/>
                             <constraint firstItem="Xk0-iq-8Z5" firstAttribute="centerY" secondItem="qd4-uD-NyU" secondAttribute="centerY" id="b9s-Gt-soc"/>
+                            <constraint firstItem="wvf-7D-21C" firstAttribute="leading" secondItem="Z4c-RE-fT8" secondAttribute="leading" constant="20" id="bcI-Um-cJ8"/>
                             <constraint firstItem="c6f-Da-Rwc" firstAttribute="top" secondItem="Z4c-RE-fT8" secondAttribute="top" constant="20" id="dpV-1c-G0Y"/>
                             <constraint firstItem="Z4c-RE-fT8" firstAttribute="trailing" secondItem="Xk0-iq-8Z5" secondAttribute="trailing" constant="20" id="goO-fM-RgL"/>
-                            <constraint firstItem="wvf-7D-21C" firstAttribute="centerY" secondItem="qd4-uD-NyU" secondAttribute="centerY" id="hGg-Cb-KWL"/>
+                            <constraint firstItem="wvf-7D-21C" firstAttribute="leading" secondItem="Z4c-RE-fT8" secondAttribute="leading" constant="20" id="pbK-P5-WUt"/>
                             <constraint firstItem="DPD-jK-5ZW" firstAttribute="leading" secondItem="1Kp-eN-zYh" secondAttribute="leading" id="qKd-X9-8mg"/>
                             <constraint firstItem="DPD-jK-5ZW" firstAttribute="trailing" secondItem="1Kp-eN-zYh" secondAttribute="trailing" id="vSr-2J-a2c"/>
                             <constraint firstItem="DPD-jK-5ZW" firstAttribute="centerX" secondItem="AmD-Qm-WP3" secondAttribute="centerX" id="voj-b6-xeb"/>
-                            <constraint firstItem="Z4c-RE-fT8" firstAttribute="trailing" secondItem="wvf-7D-21C" secondAttribute="trailing" constant="20" id="xcx-Wk-k6q"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="k5q-eK-CjF"/>
                     <connections>
-                        <outlet property="multiSwitch1" destination="4dg-WY-hxh" id="oap-LL-bht"/>
-                        <outlet property="multiSwitch2" destination="tIT-Ux-YQs" id="7lE-4K-1Yr"/>
-                        <outlet property="multiSwitch3" destination="NlO-DR-oh1" id="OpH-Xt-E1f"/>
-                        <outlet property="multiSwitch4" destination="8An-TM-sjP" id="R7E-uB-Sz0"/>
-                        <outlet property="multipleLabel1" destination="VeQ-Vb-mE2" id="h7z-96-Xak"/>
-                        <outlet property="multipleLabel2" destination="4Ys-Vz-2Ue" id="ZQb-bc-U4e"/>
-                        <outlet property="multipleLabel3" destination="S7H-pa-Qbr" id="1OI-II-lp3"/>
-                        <outlet property="multipleLabel4" destination="6Cc-FY-7vX" id="zBz-FL-cgK"/>
                         <outlet property="multipleStackView" destination="wvf-7D-21C" id="jpy-1K-QAb"/>
                         <outlet property="questionLabel" destination="c6f-Da-Rwc" id="fuX-dc-hq5"/>
                         <outlet property="questionProgressView" destination="DPD-jK-5ZW" id="NYK-FD-HPT"/>
@@ -776,10 +762,6 @@
                         <outlet property="rangedLabel2" destination="uy0-Tl-tov" id="Iar-ay-Cuc"/>
                         <outlet property="rangedSlider" destination="aba-4Z-lbF" id="lTh-gG-bgx"/>
                         <outlet property="rangedStackView" destination="1Kp-eN-zYh" id="IOK-Iw-JZE"/>
-                        <outlet property="singleButton1" destination="1he-WL-fmf" id="SB2-fG-Adn"/>
-                        <outlet property="singleButton2" destination="B4F-fj-9yA" id="Odn-Yj-uVg"/>
-                        <outlet property="singleButton3" destination="AAD-qU-oJI" id="6dd-17-Kfk"/>
-                        <outlet property="singleButton4" destination="5OE-i6-1sf" id="xfq-fP-wly"/>
                         <outlet property="singleStackView" destination="Xk0-iq-8Z5" id="tZo-WA-bhO"/>
                         <outlet property="timerLabel" destination="AmD-Qm-WP3" id="3TY-5r-jP2"/>
                         <segue destination="5vM-ik-IWa" kind="show" identifier="Results2" id="jxq-5m-MwY"/>
@@ -977,14 +959,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="XXc-hn-5Qx"/>
                     <connections>
-                        <outlet property="multiSwitch1" destination="rU8-GV-vWc" id="1T0-Gs-lUz"/>
-                        <outlet property="multiSwitch2" destination="6lk-uq-BJg" id="R11-mn-C4B"/>
-                        <outlet property="multiSwitch3" destination="E3D-oM-lb1" id="AD5-vt-o6T"/>
-                        <outlet property="multiSwitch4" destination="OdA-Gq-Tyf" id="hgq-8E-1eo"/>
-                        <outlet property="multipleLabel1" destination="8Ov-if-08O" id="HES-Bt-YsT"/>
-                        <outlet property="multipleLabel2" destination="yX6-PC-Lxh" id="abt-Mc-D3U"/>
-                        <outlet property="multipleLabel3" destination="eeV-g3-Z1n" id="W6d-g0-16v"/>
-                        <outlet property="multipleLabel4" destination="b4s-LS-Bkf" id="HMK-8X-QSx"/>
                         <outlet property="multipleStackView" destination="dfR-tC-gJJ" id="Fbt-dv-aeX"/>
                         <outlet property="questionLabel" destination="M2z-Ek-LAD" id="cy6-0S-YKN"/>
                         <outlet property="questionProgressView" destination="kEa-a8-ZbN" id="Q3F-9h-aYm"/>
@@ -992,10 +966,6 @@
                         <outlet property="rangedLabel2" destination="NhR-Sp-lCf" id="rE8-6l-Wb2"/>
                         <outlet property="rangedSlider" destination="222-zd-3IW" id="rFN-ce-Aak"/>
                         <outlet property="rangedStackView" destination="ues-7Z-lZ9" id="koF-9S-JHT"/>
-                        <outlet property="singleButton1" destination="Jfs-l1-42S" id="Lec-Hu-eke"/>
-                        <outlet property="singleButton2" destination="oi5-WX-KZw" id="Fjg-dv-y97"/>
-                        <outlet property="singleButton3" destination="KoC-qJ-arJ" id="IjO-SY-zmO"/>
-                        <outlet property="singleButton4" destination="aSy-wI-KZE" id="UTY-NY-isw"/>
                         <outlet property="singleStackView" destination="yvO-Om-9CK" id="2xc-oq-znS"/>
                         <outlet property="timerLabel" destination="hKc-US-h2q" id="kte-Ia-61p"/>
                         <segue destination="mNP-5f-5EH" kind="show" identifier="Results3" id="xJJ-Hr-G7M"/>
@@ -1193,14 +1163,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="qL2-Vz-mH8"/>
                     <connections>
-                        <outlet property="multiSwitch1" destination="wnv-Dr-cBD" id="ahD-Hk-Jss"/>
-                        <outlet property="multiSwitch2" destination="PNY-iE-KTN" id="e6z-nJ-uAr"/>
-                        <outlet property="multiSwitch3" destination="5QV-qn-I7f" id="0zv-gd-hab"/>
-                        <outlet property="multiSwitch4" destination="6aO-bB-BYL" id="JR2-tH-2eb"/>
-                        <outlet property="multipleLabel1" destination="Kcw-Le-pqs" id="i4z-pz-EXU"/>
-                        <outlet property="multipleLabel2" destination="HmD-rT-gya" id="3bb-pA-dbf"/>
-                        <outlet property="multipleLabel3" destination="otN-JV-RfK" id="HED-1w-buU"/>
-                        <outlet property="multipleLabel4" destination="ihF-c7-sBH" id="fbM-6n-CST"/>
                         <outlet property="multipleStackView" destination="bbz-TY-CGw" id="b5y-q9-ObW"/>
                         <outlet property="questionLabel" destination="aIu-ez-Chy" id="3xt-5p-4a8"/>
                         <outlet property="questionProgressView" destination="xE8-Kb-sUE" id="dMs-cc-o9h"/>
@@ -1208,10 +1170,6 @@
                         <outlet property="rangedLabel2" destination="Nxg-jc-44n" id="T3a-WI-yYx"/>
                         <outlet property="rangedSlider" destination="wmp-IF-bwH" id="Dlo-Tc-Reg"/>
                         <outlet property="rangedStackView" destination="268-od-tB9" id="1pe-PB-23m"/>
-                        <outlet property="singleButton1" destination="m34-9K-0b0" id="NLA-4X-m8a"/>
-                        <outlet property="singleButton2" destination="0nj-UN-kHc" id="uf5-JY-u30"/>
-                        <outlet property="singleButton3" destination="3Ob-Fy-jac" id="rjs-aY-U0C"/>
-                        <outlet property="singleButton4" destination="hSL-zD-0Wo" id="yB2-bL-1R6"/>
                         <outlet property="singleStackView" destination="6F4-aL-c3d" id="OcI-BF-DXN"/>
                         <outlet property="timerLabel" destination="gYY-Fx-Oaf" id="Cee-E2-VhZ"/>
                         <segue destination="4BY-JQ-wKA" kind="show" identifier="Results4" id="3HZ-rf-qtF"/>
@@ -1436,6 +1394,37 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ufz-G7-o3W" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3733" y="-1369"/>
+        </scene>
+        <!--History View Controller-->
+        <scene sceneID="xdC-0S-jfC">
+            <objects>
+                <viewController id="A6N-aT-8de" customClass="HistoryViewController" customModule="PersonalityQuiz" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6xE-fE-2Yq">
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="80" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="2fc-yL-ITP">
+                                <rect key="frame" x="0.0" y="162" width="430" height="702"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="bMP-Gl-Htt"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="bMP-Gl-Htt" firstAttribute="bottom" secondItem="2fc-yL-ITP" secondAttribute="bottom" id="0vW-sS-kjg"/>
+                            <constraint firstItem="bMP-Gl-Htt" firstAttribute="trailing" secondItem="2fc-yL-ITP" secondAttribute="trailing" id="QcA-mh-KK6"/>
+                            <constraint firstItem="2fc-yL-ITP" firstAttribute="top" secondItem="bMP-Gl-Htt" secondAttribute="top" id="aUm-qS-MUW"/>
+                            <constraint firstItem="2fc-yL-ITP" firstAttribute="leading" secondItem="bMP-Gl-Htt" secondAttribute="leading" id="q5I-uz-0Eg"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="mnq-aG-4Hb"/>
+                    <connections>
+                        <outlet property="tableView" destination="2fc-yL-ITP" id="neA-6w-6GU"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WsZ-Mo-0Y4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1727" y="901"/>
         </scene>
         <!--Introduction2 View Controller-->
         <scene sceneID="qQh-oR-gUh">
@@ -1784,7 +1773,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="qdQ-Sr-slG">
-                        <barButtonItem key="rightBarButtonItem" title="Done" id="R5v-XB-Xvc"/>
+                        <barButtonItem key="rightBarButtonItem" title="Done" id="R5v-XB-Xvc">
+                            <connections>
+                                <action selector="doneButtonTapped:" destination="5vM-ik-IWa" id="zF0-XY-hDH"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="resultAnswerLabel" destination="5jD-49-dFN" id="NfQ-kr-aGC"/>
@@ -1832,7 +1825,7 @@
                     <navigationItem key="navigationItem" id="T0I-l3-kWR">
                         <barButtonItem key="rightBarButtonItem" title="Done" id="LIf-wi-fcP">
                             <connections>
-                                <segue destination="3Yb-JL-mZh" kind="unwind" unwindAction="unwindToQuizIntroduction:" id="XdN-Gr-3Oh"/>
+                                <action selector="doneButtonTapped:" destination="mNP-5f-5EH" id="u5i-Jz-NgF"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -1842,7 +1835,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZGB-B1-aDd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="3Yb-JL-mZh" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="4563" y="-614"/>
         </scene>
@@ -1881,7 +1873,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="TTG-QR-iHV">
-                        <barButtonItem key="rightBarButtonItem" title="Done" id="Qtx-ic-eS6"/>
+                        <barButtonItem key="rightBarButtonItem" title="Done" id="Qtx-ic-eS6">
+                            <connections>
+                                <action selector="doneButtonTapped:" destination="4BY-JQ-wKA" id="0ta-cU-wOe"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="resultAnswerLabel" destination="nmD-ch-DLf" id="ges-OK-0Ty"/>
